@@ -3,6 +3,7 @@
 --------------------
 
 Added to github, fixed up a few organisational things.
+Removed nanoxml and moved to Processing's own XML parser.
 
 
 10/03/2007 10:40 CST
