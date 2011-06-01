@@ -53,18 +53,7 @@ Place this folder (gpx) into your Processing libraries folder, then restart Proc
 Bugs / Requests
 ---------------
 
-email tom@tom-carden.co.uk
+Please file an issue at https://github.com/RandomEtc/processing-gpx/issues
 
 
 Enjoy! TomC.
-
-
-10/02/2006 09:55 GMT
---------------------
-
-Initial release on processinghacks.com.
-
-10/03/2007 10:40 CST
---------------------
-
-Updated for Processing 0123+ (PApplet.reader became PApplet.createReader)
