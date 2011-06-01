@@ -1,6 +1,6 @@
 /*
 
-  Copyright (c) 2006 Tom Carden
+  Copyright (c) 2006-2011 Tom Carden
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -21,8 +21,7 @@
 
 package tomc.gpx;
 
-import java.util.Iterator;
-import nanoxml.XMLElement;
+import processing.xml.XMLElement;
 
 /** simple GPX waypoint, only understands latitude, longitude, name and type 
     FIXME extend parsing to understand other properties */
@@ -48,21 +47,10 @@ public class GPXWayPoint {
 
   /** parses a GPXWayPoint from the given nanoxml.XMLElement */
   public GPXWayPoint(XMLElement trkpt) {
-
-    this.lat = Double.parseDouble(trkpt.getStringAttribute("lat"));
-    this.lon = Double.parseDouble(trkpt.getStringAttribute("lon"));
-
-    Iterator ptIter = trkpt.getChildren().iterator();
-    while (ptIter.hasNext()) {
-      XMLElement element = (XMLElement)ptIter.next();
-      if (element.getName().equals("name")) {
-        this.name = element.getContent();
-      }
-      else if (element.getName().equals("type")) {
-        this.type = element.getContent();
-      }
-    }
-
+    this.lat = trkpt.getDouble("lat");
+    this.lon = trkpt.getDouble("lon");
+    this.name = trkpt.getChild("name").getContent();
+    this.type = trkpt.getChild("type").getContent();
   }
 
 }

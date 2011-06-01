@@ -1,6 +1,6 @@
 /*
 
-  Copyright (c) 2006 Tom Carden
+  Copyright (c) 2006-2011 Tom Carden
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -21,9 +21,8 @@
 
 package tomc.gpx;
 
+import processing.xml.XMLElement;
 import java.util.Vector;
-import java.util.Iterator;
-import nanoxml.XMLElement;
 
 /** a collection of GPXTrackSeg objects, with type-safe convenience methods for adding/removing/getting track segments */
 public class GPXTrack extends Vector {
@@ -31,15 +30,10 @@ public class GPXTrack extends Vector {
   public String name;
 
   public GPXTrack(XMLElement xmltrk) {
-    Iterator trkIter = xmltrk.getChildren().iterator();
-    while (trkIter.hasNext()) {
-      XMLElement trkdata = (XMLElement)trkIter.next();
-      if (trkdata.getName().equals("name")) {
-        this.name = trkdata.getContent();
-      }
-      else if (trkdata.getName().equals("trkseg")) {
-        this.addTrackSeg(new GPXTrackSeg(trkdata));
-      }
+    this.name = xmltrk.getChild("name").getContent();
+    XMLElement[] children = xmltrk.getChildren("trkseg");
+    for (int i = 0; i < children.length; i++) {
+      this.addTrackSeg(new GPXTrackSeg(children[i]));
     }
   }
   

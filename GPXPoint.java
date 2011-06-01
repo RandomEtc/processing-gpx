@@ -1,6 +1,6 @@
 /*
 
-  Copyright (c) 2006 Tom Carden
+  Copyright (c) 2006-2011 Tom Carden
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -21,10 +21,9 @@
 
 package tomc.gpx;
 
-import java.util.Iterator;
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import nanoxml.XMLElement;
+import processing.xml.XMLElement;
 
 /** simple GPX point, only understands latitude, longitude, elevation and time 
     FIXME extend parsing to understand other properties */
@@ -55,8 +54,13 @@ public class GPXPoint {
       understands 2 time formats: ISO 8601 with and without milliseconds */
   public GPXPoint(XMLElement trkpt) {
 
+    // NB:- this is a bit more complex than it should be
+    //      but it should handle a wider variety of broken
+    //      GPX files, and let's face it that's why you're using
+    //      a library instead of parsing this file yourself
+
     try {
-      String sLat = trkpt.getStringAttribute("lat");
+      String sLat = trkpt.getString("lat");
       this.lat = Double.parseDouble(sLat);
     }
     catch (Exception e) {
@@ -67,7 +71,7 @@ public class GPXPoint {
       this.lat = 0.0;
     }
     try {
-      String sLon = trkpt.getStringAttribute("lon");
+      String sLon = trkpt.getString("lon");
       this.lon = Double.parseDouble(sLon);
     }
     catch (Exception e) {
@@ -78,9 +82,9 @@ public class GPXPoint {
       this.lon = 0.0;
     }
 
-    Iterator ptIter = trkpt.getChildren().iterator();
-    while (ptIter.hasNext()) {
-      XMLElement element = (XMLElement)ptIter.next();
+    XMLElement[] children = trkpt.getChildren();
+    for (int i = 0; i < children.length; i++) {
+      XMLElement element = children[i];
       if (element.getName().equals("ele")) {
         try {
           String sEle = element.getContent();
@@ -105,7 +109,7 @@ public class GPXPoint {
           }
           else {
              this.time = new Date(Long.parseLong(t)); // try for unix time
-	  }
+    	  }
         }
         catch(Exception e) {
           if (GPX.debug) {

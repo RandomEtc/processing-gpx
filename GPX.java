@@ -1,6 +1,6 @@
 /*
 
-  Copyright (c) 2006 Tom Carden
+  Copyright (c) 2006-2011 Tom Carden
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -41,8 +41,7 @@ package tomc.gpx;
 
 import processing.core.PApplet;
 import java.util.Vector;
-import java.util.Iterator;
-import nanoxml.*;
+import processing.xml.XMLElement;
 
 /** contains a collection of GPXTrack objects and GPXWayPoint objects */
 public class GPX {
@@ -60,18 +59,15 @@ public class GPX {
   
   public void parse(String url) {  
     try {
-      XMLElement xmldata = new XMLElement();
-      xmldata.parseFromReader(parent.createReader(parent.openStream(url)));        
-      Vector xmlthings = xmldata.getChildren();
-      for (int i = 0; i < xmlthings.size(); i++) {
-        XMLElement xmlthing = (XMLElement)xmlthings.get(i);
+      XMLElement xmldata = new XMLElement(parent, url);
+      XMLElement[] xmlthings = xmldata.getChildren();
+      for (int i = 0; i < xmlthings.length; i++) {
+        XMLElement xmlthing = xmlthings[i];
         if (xmlthing.getName().equals("trk")) {
-          GPXTrack trk = new GPXTrack(xmlthing);
-          addTrack(trk);
+          addTrack(new GPXTrack(xmlthing));
         }
         else if (xmlthing.getName().equals("wpt")) {
-          GPXWayPoint wpt = new GPXWayPoint(xmlthing);
-	  addWayPoint(wpt);
+          addWayPoint(new GPXWayPoint(xmlthing));
         }
       }
     }
@@ -81,10 +77,6 @@ public class GPX {
   }
 
   /* Tracks */
-  
-  public Iterator getTrackIterator() {
-    return tracks.iterator();
-  }
   
   public void addTrack(GPXTrack trk) {
     tracks.addElement(trk); 
@@ -104,10 +96,6 @@ public class GPX {
 
   /* WayPoints */
   
-  public Iterator getWayPointIterator() {
-    return wayPoints.iterator();
-  }
-    
   public void addWayPoint(GPXWayPoint wpt) {
     wayPoints.addElement(wpt); 
   }
@@ -140,9 +128,10 @@ public class GPX {
         for (int j = 0; j < trk.size(); j++) {
           GPXTrackSeg trkseg = trk.getTrackSeg(j);
           System.out.println("Segment (" + i + "," + j + ") has " + trkseg.size() + " track points");
-//          for (int k = 0; k < trkseg.size(); k++) {
-//            GPXPoint pt = trkseg.getPoint(k);
-//          }
+          for (int k = 0; k < trkseg.size(); k++) {
+            GPXPoint pt = trkseg.getPoint(k);
+            System.out.println("Point (" + pt.lat + "," + pt.lon + ")");
+          }
         }
       }
     }

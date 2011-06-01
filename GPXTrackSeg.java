@@ -1,6 +1,6 @@
 /*
 
-  Copyright (c) 2006 Tom Carden
+  Copyright (c) 2006-2011 Tom Carden
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -21,20 +21,16 @@
 
 package tomc.gpx;
 
-import nanoxml.XMLElement;
-import java.util.Iterator;
+import processing.xml.XMLElement;
 import java.util.Vector;
 
 /** a collection of GPXPoint objects, with type-safe convenience methods for adding/removing/getting points */
 public class GPXTrackSeg extends Vector {
 
   public GPXTrackSeg(XMLElement trkseg) {
-    Iterator ptIter = trkseg.getChildren().iterator();
-    while (ptIter.hasNext()) {
-      XMLElement xmlEle = (XMLElement)ptIter.next();
-      if (xmlEle.getName().equals("trkpt")) {
-        addPoint(new GPXPoint(xmlEle));
-      }
+    XMLElement[] children = trkseg.getChildren("trkpt");
+    for (int i = 0; i < children.length; i++) {
+      addPoint(new GPXPoint(children[i]));
     }
   }
 
