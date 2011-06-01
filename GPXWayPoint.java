@@ -45,7 +45,7 @@ public class GPXWayPoint {
     this.type = type;
   }
 
-  /** parses a GPXWayPoint from the given nanoxml.XMLElement */
+  /** parses a GPXWayPoint from the given XMLElement */
   public GPXWayPoint(XMLElement trkpt) {
     this.lat = trkpt.getDouble("lat");
     this.lon = trkpt.getDouble("lon");

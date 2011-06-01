@@ -4,8 +4,7 @@ About
 
 Read and manipulate data in the GPX format. (see http://www.topografix.com/GPX/ for more).
 
-Uses nanoxml to keep the jar size minimal, so doesn't not support namespaces or extensions.
-Only basic information (lat/lon/ele/time) is parsed.
+Uses Processing's XML parser so only basic information (lat/lon/ele/time) is parsed.
 
 A GPX file is an xml file with a collection of GPX Tracks inside.  Each GPX Track has a name, and is a collection of GPX Track Segments, and each segment is a collection of GPX Points.  Each point has a latitude and longitude as well as an elevation and timestamp.  No other information is parsed by this library.  A GPX file can also contain waypoints, with lat/lon position and name and type.
 
@@ -47,7 +46,9 @@ GPX gpx;
 Installation
 ------------
 
-Place this folder (gpx) into your Processing libraries folder, then restart Processing.
+Place this folder (gpx) into your Processing/libraries folder, then restart Processing.
+Then choose GPX from the library import options in the Processing application menu.
+If it's working, "import tomc.gpx" should be added to the top of your application file.
 
 
 Bugs / Requests
@@ -56,4 +57,5 @@ Bugs / Requests
 Please file an issue at https://github.com/RandomEtc/processing-gpx/issues
 
 
-Enjoy! TomC.
+Enjoy! -- TomC.
+

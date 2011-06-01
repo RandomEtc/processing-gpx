@@ -50,7 +50,7 @@ public class GPXPoint {
     this.time = time;
   }
 
-  /** parses a GPXPoint from the given nanoxml.XMLElement 
+  /** parses a GPXPoint from the given XMLElement 
       understands 2 time formats: ISO 8601 with and without milliseconds */
   public GPXPoint(XMLElement trkpt) {
 

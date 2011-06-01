@@ -1,2 +1,2 @@
-applet=gpx.jar,nanoxml-lite-2.2.3.jar
-application=gpx.jar,nanoxml-lite-2.2.3.jar
+applet=gpx.jar
+application=gpx.jar
