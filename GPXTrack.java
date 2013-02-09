@@ -21,7 +21,7 @@
 
 package tomc.gpx;
 
-import processing.xml.XMLElement;
+import processing.data.XML;
 import java.util.Vector;
 
 /** a collection of GPXTrackSeg objects, with type-safe convenience methods for adding/removing/getting track segments */
@@ -29,24 +29,23 @@ public class GPXTrack extends Vector {
 
   public String name;
 
-  public GPXTrack(XMLElement xmltrk) {
+  public GPXTrack(XML xmltrk) {
     this.name = xmltrk.getChild("name").getContent();
-    XMLElement[] children = xmltrk.getChildren("trkseg");
-    for (int i = 0; i < children.length; i++) {
-      this.addTrackSeg(new GPXTrackSeg(children[i]));
+    for (XML child : xmltrk.getChildren("trkseg")) {
+      this.addTrackSeg(new GPXTrackSeg(child));
     }
   }
-  
+
   public GPXTrackSeg getTrackSeg(int i) {
     return (GPXTrackSeg)elementAt(i);
   }
-  
+
   public void addTrackSeg(GPXTrackSeg trkseg) {
     addElement(trkseg);
   }
-  
+
   public void removeTrackSeg(GPXTrackSeg trkseg) {
     removeElement(trkseg);
   }
-  
+
 }

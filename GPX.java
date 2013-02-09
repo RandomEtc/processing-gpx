@@ -41,7 +41,7 @@ package tomc.gpx;
 
 import processing.core.PApplet;
 import java.util.Vector;
-import processing.xml.XMLElement;
+import processing.data.XML;
 
 /** contains a collection of GPXTrack objects and GPXWayPoint objects */
 public class GPX {
@@ -52,17 +52,15 @@ public class GPX {
 
   private Vector wayPoints = new Vector();
   private Vector tracks = new Vector();
-  
+
   public GPX(PApplet parent) {
-    this.parent = parent; 
+    this.parent = parent;
   }
-  
-  public void parse(String url) {  
+
+  public void parse(String url) {
     try {
-      XMLElement xmldata = new XMLElement(parent, url);
-      XMLElement[] xmlthings = xmldata.getChildren();
-      for (int i = 0; i < xmlthings.length; i++) {
-        XMLElement xmlthing = xmlthings[i];
+      XML xmldata = parent.loadXML(url);
+      for (XML xmlthing : xmldata.getChildren()) {
         if (xmlthing.getName().equals("trk")) {
           addTrack(new GPXTrack(xmlthing));
         }
@@ -72,22 +70,22 @@ public class GPX {
       }
     }
     catch(Exception e) {
-      e.printStackTrace(); 
-    }    
+      e.printStackTrace();
+    }
   }
 
   /* Tracks */
-  
+
   public void addTrack(GPXTrack trk) {
-    tracks.addElement(trk); 
+    tracks.addElement(trk);
   }
 
   public void removeTrack(GPXTrack trk) {
-    tracks.removeElement(trk); 
+    tracks.removeElement(trk);
   }
 
   public GPXTrack getTrack(int i) {
-    return (GPXTrack)tracks.elementAt(i); 
+    return (GPXTrack)tracks.elementAt(i);
   }
 
   public int getTrackCount() {
@@ -95,17 +93,17 @@ public class GPX {
   }
 
   /* WayPoints */
-  
+
   public void addWayPoint(GPXWayPoint wpt) {
-    wayPoints.addElement(wpt); 
+    wayPoints.addElement(wpt);
   }
 
   public void removeWayPoint(GPXWayPoint wpt) {
-    wayPoints.removeElement(wpt); 
+    wayPoints.removeElement(wpt);
   }
 
   public GPXWayPoint getWayPoint(int i) {
-    return (GPXWayPoint)wayPoints.elementAt(i); 
+    return (GPXWayPoint)wayPoints.elementAt(i);
   }
 
   public int getWayPointCount() {
@@ -139,6 +137,6 @@ public class GPX {
       System.err.println("no filename supplied");
     }
   }
-  
+
 }
 

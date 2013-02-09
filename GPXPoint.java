@@ -23,9 +23,9 @@ package tomc.gpx;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import processing.xml.XMLElement;
+import processing.data.XML;
 
-/** simple GPX point, only understands latitude, longitude, elevation and time 
+/** simple GPX point, only understands latitude, longitude, elevation and time
     FIXME extend parsing to understand other properties */
 public class GPXPoint {
 
@@ -34,25 +34,25 @@ public class GPXPoint {
 
   public double lat,lon;
   public double ele;
-  public Date time; 
+  public Date time;
 
   public GPXPoint() {
-    this.lat = 0.0; 
-    this.lon = 0.0; 
-    this.ele = 0.0; 
+    this.lat = 0.0;
+    this.lon = 0.0;
+    this.ele = 0.0;
     this.time = new Date();
   }
-  
-  public GPXPoint(double lat, double lon, double ele, Date time) { 
+
+  public GPXPoint(double lat, double lon, double ele, Date time) {
     this.lat = lat;
     this.lon = lon;
     this.ele = ele;
     this.time = time;
   }
 
-  /** parses a GPXPoint from the given XMLElement 
+  /** parses a GPXPoint from the given XML
       understands 2 time formats: ISO 8601 with and without milliseconds */
-  public GPXPoint(XMLElement trkpt) {
+  public GPXPoint(XML trkpt) {
 
     // NB:- this is a bit more complex than it should be
     //      but it should handle a wider variety of broken
@@ -82,9 +82,7 @@ public class GPXPoint {
       this.lon = 0.0;
     }
 
-    XMLElement[] children = trkpt.getChildren();
-    for (int i = 0; i < children.length; i++) {
-      XMLElement element = children[i];
+    for (XML element : trkpt.getChildren()) {
       if (element.getName().equals("ele")) {
         try {
           String sEle = element.getContent();

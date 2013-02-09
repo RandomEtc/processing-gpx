@@ -1,5 +1,5 @@
 
-PROCESSING_CORE = /Applications/Processing.app/Contents/Resources/Java/core.jar
+PROCESSING_CORE = /Applications/Processing.app/Contents/Resources/Java/core/library/core.jar
 
 SRC_FILES = \
 	GPX.java \
@@ -9,7 +9,7 @@ SRC_FILES = \
 	GPXTrackSeg.java
 
 library/gpx.jar: $(SRC_FILES) Makefile
-	javac -cp $(PROCESSING_CORE) -sourcepath src -d . -target 1.1 -source 1.3 $(SRC_FILES) 
+	javac -cp $(PROCESSING_CORE) -sourcepath src -d . -target 1.5 -source 5 $(SRC_FILES)
 	jar -Mcvf library/gpx.jar tomc/gpx/*.class
 
 test:
