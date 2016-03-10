@@ -13,6 +13,8 @@ This library has only been tested with a few different files, and I expect it wi
 Usage
 -----
 
+```java
+
 import tomc.gpx.*;
 
 // outside setup()
@@ -41,7 +43,7 @@ GPX gpx;
     GPXWayPoint wpt = gpx.getWayPoint(i);
     // do something with wpt.lat or wpt.lon or wpt.name or wpt.type
   }
-
+```
 
 Installation
 ------------
